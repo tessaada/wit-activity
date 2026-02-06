@@ -57,10 +57,10 @@ for (let y = 0; y < 30; y++) {
         } else if (wallMap[y][x] == "C") {
             cell.style.backgroundColor = "#0000ff";
         } else if (wallMap[y][x] == "1") {
-            cell.style.backgroundColor = "#000";
+            cell.style.backgroundColor = "rgba(255,0,0,0.4)";
             cell.classList.add("wall");
         } else {
-            cell.style.backgroundColor = "#fff";
+            cell.style.backgroundColor = "#000";
         }
         maze.appendChild(cell);
     }
