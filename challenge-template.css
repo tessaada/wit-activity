@@ -52,6 +52,10 @@ body {
     flex: 1;
 }
 
+input {
+  margin: 30px 10px;
+}
+
 .button-container {
     padding: 20px;
     text-align: center;
