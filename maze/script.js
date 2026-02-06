@@ -988,7 +988,7 @@ for (let y = 0; y < 30; y++) {
     } else if (wallMap[y][x] == "E") {
       cell.style.backgroundColor = "#ff0000";
     } else if (wallMap[y][x] == "C") {
-      cell.style.backgroundColor = "#3772FF";
+      cell.style.backgroundColor = "#00ff00";
     } else if (wallMap[y][x] == "1") {
       cell.style.backgroundColor = "rgba(255,0,0,0.2)";
       cell.style.boxShadow = "inset 0 0 10px 1px red";
