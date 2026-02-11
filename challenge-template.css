@@ -1,76 +1,123 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #BA1110;
-    padding: 0;
-    height: 100vh;
-    display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #000 60%, #b30000);
+  color: white;
+  display: flex;
+  padding: 0;
 }
 
 .container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  text-align: center;
+  animation: fadeIn 1.5s ease-in;
 }
 
 .title {
-    background-color: #D7D8D6;
-    border: 2px solid #000000;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 2px solid red;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff1a1a;
+  box-shadow: 0 0 20px red;
 }
 
 .instructions {
-    background-color: #D7D8D6;
-    border: 2px solid #000000;
-    padding: 15px;
-    margin-bottom: 20px;
-    line-height: 1.6;
-    color: #000000;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 2px solid red;
+  padding: 15px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #ddd;
+  box-shadow: 0 0 20px red;
 }
 
 .instructions h2,
 .instructions p {
-    color: #000000;
+  color: #ddd;
+  margin-bottom: 10px;
 }
 
 .workspace {
-    background-color: #D7D8D6;
-    border: 2px solid #000000;
-    padding: 30px;
-    margin-bottom: 20px;
-    flex: 1;
+  background-color: rgba(0, 0, 0, 0.85);
+  border: 2px solid red;
+  padding: 30px;
+  margin-bottom: 20px;
+  flex: 1;
+  box-shadow: 0 0 20px red;
 }
 
 input {
   margin: 30px 10px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: white;
+  transition: all 0.15s ease;
+}
+
+input:hover {
+  background-color: white;
+  color: black;
 }
 
 .button-container {
-    padding: 20px;
-    text-align: center;
+  padding: 20px;
+  text-align: center;
 }
 
 button {
-    padding: 10px 30px;
-    font-size: 16px;
-    background-color: #000000;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
+  padding: 15px 40px;
+  font-size: 18px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #555555;
+  background-color: white;
+  color: red;
+}
+
+.final-answer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding-left: 20px;
+}
+
+label {
+  color: #ddd;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
