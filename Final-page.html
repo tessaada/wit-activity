@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>THE CORE</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#000 60%,#b30000);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.container{
+  text-align:center;
+  max-width:650px;
+  padding:50px;
+  border:2px solid red;
+  background:rgba(0,0,0,0.9);
+  box-shadow:0 0 25px red;
+  animation:fadeIn 1.5s ease-in;
+}
+
+h1{
+  font-size:3rem;
+  color:#ff1a1a;
+  margin-bottom:20px;
+  text-shadow:0 0 10px red;
+}
+
+p{
+  color:#ddd;
+  margin-bottom:40px;
+  line-height:1.6;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+button{
+  padding:15px 30px;
+  font-size:1rem;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.escape{
+  background:red;
+  color:white;
+}
+
+.escape:hover{
+  background:white;
+  color:red;
+  transform:scale(1.05);
+}
+
+.stay{
+  background:transparent;
+  color:white;
+  border:2px solid white;
+}
+
+.stay:hover{
+  background:white;
+  color:black;
+  transform:scale(1.05);
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.warning{
+  color:#ff4d4d;
+  margin-top:20px;
+  font-size:0.9rem;
+  opacity:0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>CORE ACCESS GRANTED</h1>
+
+<p>
+You made it to the core of the maze.<br><br>
+
+Along the way you used the same skills that power technology:<br>
+• Logical thinking<br>
+• Creative problem solving<br>
+• Persistence when things didn't work the first time<br><br>
+
+These are the same skills developers use every day.<br><br>
+
+Today you didn't just escape a maze —  
+you stepped further into the world of tech.
+</p>
+
+<div class="buttons">
+
+<button class="escape" onclick="escapeMaze()">
+ESCAPE THE MAZE
+</button>
+
+<button class="stay" onclick="stayMaze()">
+REMAIN IN THE SYSTEM
+</button>
+
+</div>
+
+<p class="warning">
+⚠ WARNING: This decision cannot be undone.
+</p>
+
+</div>
+
+<script>
+
+function escapeMaze(){
+  alert("SYSTEM OVERRIDE...\n\nYou broke the maze.\nYou proved your power in tech.\n\nWelcome to the future. 🚀");
+}
+
+function stayMaze(){
+  alert("ACCESS ACCEPTED...\n\nYou chose to remain.\nThe maze now belongs to you.\n\nNew challengers are coming...");
+}
+
+</script>
+
+</body>
+</html>
