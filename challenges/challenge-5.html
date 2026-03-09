@@ -9,7 +9,7 @@
             <div class="instructions">
                 <h2>Instructions:</h2>
                 <p>Write a function that plays a single round of the game 'Rock, Paper, Scissors'. 
-                <br><b>Rules of the game:</b> Rock beats Scissors, Scissors beats paper, Paper beats rock
+                <br><b>Rules of the game:</b> Rock beats Scissors, Scissors beats Paper, Paper beats Rock
                 <br>When called, the function should return the winning player reference (i.e., 'player1' or 'player2' or 'draw') as a single string.</p>
             </div>
             <div class="workspace">
@@ -18,18 +18,86 @@
                     ability to complete the challenge - only your final answer will be checked.
                 </p>
                 <iframe id="oc-editor" frameborder="0" height="450px" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideStdin=true" width="100%"></iframe>
-                <p>
+                <p style="margin-bottom: 16px;">
                     <i>This code editor is embedded from <a href="https://onecompiler.com/">OneCompiler</a></i>
                 </p>
                 <div class="final-answer">
-                    <label>Final answer:</label>
-                    <input />
+                    <p><b>Test your function with the following inputs and submit the outputs below:</b></p>
+
+                    <div class="answer-row">
+                        <label>rock_paper_scissors('rock', 'paper'):</label>
+                        <input id="answer-1" type="text" placeholder="Enter output..." />
+                        <div id="feedback-1" class="feedback"></div>
+                    </div>
+
+                    <div class="answer-row">
+                        <label>rock_paper_scissors('paper', 'paper'):</label>
+                        <input id="answer-2" type="text" placeholder="Enter output..." />
+                        <div id="feedback-2" class="feedback"></div>
+                    </div>
+
+                    <div class="answer-row">
+                        <label>rock_paper_scissors('scissors', 'paper'):</label>
+                        <input id="answer-3" type="text" placeholder="Enter output..." />
+                        <div id="feedback-3" class="feedback"></div>
+                    </div>
                 </div>
             </div>
             <div class="button-container">
-                <button>Submit</button>
+                <button onclick="checkAnswer()">Submit</button>
             </div>
         </div>
         <footer></footer>
+
+        <script>
+            var correctHashes = [
+                '05c67fbc8ffc91e344b6a9065282fc4a4541e02ebe4f0e5886deb5aff9a63f2e',
+                'c3f75c3d57de3d8a4305a62a1db671e545406cb8968f80f74afcb13f9c495b6d',
+                '71e894b88a0a312a002186b5b37ec1b139977dd400bc00f52e48a65b9c6d0f97'
+            ];
+
+            var salt = atob('V0lUY2hhbGxlbmdlNQ==');
+
+            async function hashInput(input) {
+                var encoder = new TextEncoder();
+                var data = encoder.encode(salt + input);
+                var hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                var hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(function(b) {
+                    return b.toString(16).padStart(2, '0');
+                }).join('');
+            }
+
+            async function checkInput(inputId, feedbackId, correctHash) {
+                var input = document.getElementById(inputId).value.trim().toLowerCase();
+                var feedback = document.getElementById(feedbackId);
+
+                if (input === '') {
+                    feedback.textContent = '⚠️ Please enter an answer.';
+                    feedback.style.color = 'orange';
+                    return;
+                }
+
+                var hash = await hashInput(input);
+
+                if (hash === correctHash) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.style.color = 'green';
+                } else {
+                    feedback.textContent = '❌ Incorrect, try again.';
+                    feedback.style.color = 'red';
+                }
+            }
+
+            async function checkAnswer() {
+                await checkInput('answer-1', 'feedback-1', correctHashes[0]);
+                await checkInput('answer-2', 'feedback-2', correctHashes[1]);
+                await checkInput('answer-3', 'feedback-3', correctHashes[2]);
+            }
+
+            document.getElementById('answer-1').addEventListener('keydown', function(e) { if (e.key === 'Enter') checkAnswer(); });
+            document.getElementById('answer-2').addEventListener('keydown', function(e) { if (e.key === 'Enter') checkAnswer(); });
+            document.getElementById('answer-3').addEventListener('keydown', function(e) { if (e.key === 'Enter') checkAnswer(); });
+        </script>
     </body>
 </html>
