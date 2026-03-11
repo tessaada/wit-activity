@@ -102,7 +102,7 @@
 
   <div class="container">
     <h1>CODE: RED</h1>
-    <h2>She Codes :The Tech Maze !</h2>
+    <h2>She Codes: The Tech Maze!</h2>
     <p>
       Welcome to a maze built on logic, creativity, and courage.  
       Navigate the paths. Solve the challenges. Prove your power in tech.
@@ -116,8 +116,10 @@
 
   <script>
     function startGame() {
-      alert("Let the challenge begin! 🚀\n(Connect this to your maze page next)");
-      // window.location.href = "maze.html";
+      localStorage.setItem("current_challenge", "0");
+      localStorage.setItem("player_x", "0");
+      localStorage.setItem("player_y", "1");
+      window.location.href = "./maze/index.html";
     }
 
     function showInfo() {

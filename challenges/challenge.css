@@ -119,6 +119,10 @@ label {
     white-space: nowrap;
 }
 
+a {
+    color: rgb(49, 228, 255);
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

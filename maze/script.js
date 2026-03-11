@@ -43,22 +43,18 @@ const wallMap = [
 ];
 
 const player = {
-    x: 0,
-    y: 1,
+    x: parseInt(localStorage.getItem("player_x")),
+    y: parseInt(localStorage.getItem("player_y")),
     color: "#ff0000",
 };
 
 const challenges = [
-    { x: 1, y: 3, location: "here", completed: false },
-    { x: 5, y: 6, location: "here", completed: false },
-    { x: 7, y: 13, location: "here", completed: false },
-    { x: 11, y: 19, location: "here", completed: false },
-    { x: 18, y: 13, location: "here", completed: false },
-    { x: 19, y: 4, location: "here", completed: false },
-    { x: 28, y: 3, location: "here", completed: false },
-    { x: 24, y: 9, location: "here", completed: false },
-    { x: 24, y: 21, location: "here", completed: false },
-    { x: 26, y: 28, location: "here", completed: false },
+    { x: 5, y: 6, completed: false },
+    { x: 7, y: 13, completed: false },
+    { x: 11, y: 19, completed: false },
+    { x: 19, y: 4, completed: false },
+    { x: 28, y: 3, completed: false },
+    { x: 24, y: 21, completed: false },
 ];
 
 for (let y = 0; y < 30; y++) {
@@ -72,7 +68,7 @@ for (let y = 0; y < 30; y++) {
             console.log("Found");
         } else if (wallMap[y][x] == "E") {
             cell.classList.add("end");
-        } else if (challenges.find((c) => c.x == x && c.y == y)) {
+        } else if (challenges.find((c, i) => c.x == x && c.y == y && i + 1 > parseInt(localStorage.getItem("current_challenge")))) {
             cell.classList.add("challenge");
         } else if (wallMap[y][x] == "1") {
             cell.classList.add("wall");
@@ -127,8 +123,15 @@ document.body.addEventListener("keydown", (e) => {
     }
     const currentCell = document.getElementById(`${player.x},${player.y}`);
     if (currentCell.classList.contains("end")) {
-        console.log("You finished!!");
+        window.location.href = "../Final-page.html";
     } else if (currentCell.classList.contains("challenge")) {
+        challenges.forEach((challenge, i) => {
+            if (player.x == challenge.x && player.y == challenge.y) {
+                localStorage.setItem("player_x", `${player.x}`);
+                localStorage.setItem("player_y", `${player.y}`);
+                document.location.href = `../challenges/challenge-${i + 1}.html`;
+            }
+        });
         console.log("Challenge reached");
     }
 });

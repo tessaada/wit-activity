@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
     <head>
         <title>WIT Challenge</title>
-        <link rel="stylesheet" href="challenge-template.css">
+        <link rel="stylesheet" href="challenge-template.css" />
     </head>
     <body>
         <div class="container">
@@ -25,11 +25,12 @@
             </div>
 
             <div class="workspace">
-                <p style="margin-bottom: 16px;">
-                    If you have a preferred code editor, please use it. Otherwise use the embedded editor below. Your choice of editor/language will not affect your ability to complete the challenge - only your final answer will be checked.
+                <p style="margin-bottom: 16px">
+                    If you have a preferred code editor, please use it. Otherwise use the embedded editor below. Your choice of editor/language will not affect your ability to complete the challenge -
+                    only your final answer will be checked.
                 </p>
                 <iframe id="oc-editor" frameborder="0" height="450px" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideStdin=true" width="100%"></iframe>
-                <p style="margin-bottom: 16px;">
+                <p style="margin-bottom: 16px">
                     <i>This code editor is embedded from <a href="https://onecompiler.com/">OneCompiler</a></i>
                 </p>
                 <div class="final-answer">
@@ -46,47 +47,54 @@
         <footer></footer>
 
         <script>
-            var correctHash = '1f644623abc84b0d59a676f2640ca2bf6ed76858f1c14239e5fd30f0a3613d89';
-            var salt = atob('V0lUY2hhbGxlbmdlNg==');
+            var correctHash = "1f644623abc84b0d59a676f2640ca2bf6ed76858f1c14239e5fd30f0a3613d89";
+            var salt = atob("V0lUY2hhbGxlbmdlNg==");
 
             async function hashInput(input) {
                 var encoder = new TextEncoder();
                 var data = encoder.encode(salt + input);
-                var hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                var hashBuffer = await crypto.subtle.digest("SHA-256", data);
                 var hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(function(b) {
-                    return b.toString(16).padStart(2, '0');
-                }).join('');
+                return hashArray
+                    .map(function (b) {
+                        return b.toString(16).padStart(2, "0");
+                    })
+                    .join("");
             }
 
             function toTitleCase(str) {
                 return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
             }
 
-            async function checkAnswer() {
-                var raw = document.getElementById('answer-input').value.trim();
-                var feedback = document.getElementById('answer-feedback');
+            async function buttonAction() {
+                var raw = document.getElementById("answer-input").value.trim();
+                var feedback = document.getElementById("answer-feedback");
+                const submitButton = document.getElementById("submitButton");
+                if (submitButton.textContent == "Submit") {
+                    if (raw === "") {
+                        feedback.textContent = "⚠️ Please enter an answer.";
+                        feedback.style.color = "orange";
+                        return;
+                    }
 
-                if (raw === '') {
-                    feedback.textContent = '⚠️ Please enter an answer.';
-                    feedback.style.color = 'orange';
-                    return;
-                }
+                    var input = toTitleCase(raw);
+                    var hash = await hashInput(input);
 
-                var input = toTitleCase(raw);
-                var hash = await hashInput(input);
-
-                if (hash === correctHash) {
-                    feedback.textContent = '✅ Correct! Well done!';
-                    feedback.style.color = 'green';
+                    if (hash === correctHash) {
+                        feedback.textContent = "✅ Correct! Well done!";
+                        feedback.style.color = "green";
+                        localStorage.setItem("current_challenge", "6");
+                    } else {
+                        feedback.textContent = "❌ Incorrect, try again.";
+                        feedback.style.color = "red";
+                    }
                 } else {
-                    feedback.textContent = '❌ Incorrect, try again.';
-                    feedback.style.color = 'red';
+                    window.location.href = "../maze/index.html";
                 }
             }
 
-            document.getElementById('answer-input').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') checkAnswer();
+            document.getElementById("answer-input").addEventListener("keydown", function (e) {
+                if (e.key === "Enter") buttonAction();
             });
         </script>
     </body>
