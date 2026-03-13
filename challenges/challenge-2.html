@@ -1,83 +1,106 @@
 <html>
-    <head>
-        <title>WIT Challenge</title>
-        <link rel="stylesheet" href="challenge.css" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="title">Challenge 2: Codeword</div>
-            <div class="instructions">
-                <h2>Instructions</h2>
-                <p>You have been given the code: <b>41267520</b></p>
-                <p>This has been calculated by multiplying the ASCII values of 4 letters, which together make up a word. Reverse engineer the code to find the 4 letter answer.</p>
-                <p>HINT: the 4-letter word uses uppercase letters only.</p>
-            </div>
-            <div class="workspace">
-                <p style="margin-bottom: 16px">
-                    If you have a preferred code editor, please use it for writing your solution. Otherwise, please use the embedded editor below. Your choice of editor/language will not affect your
-                    ability to complete the challenge - only your final answer will be checked.
-                </p>
-                <iframe id="oc-editor" frameborder="0" height="450px" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideStdin=true" width="100%"></iframe>
-                <p style="margin-bottom: 16px">
-                    <i>This code editor is embedded from <a href="https://onecompiler.com/">OneCompiler</a></i>
-                </p>
-                <div class="final-answer">
-                    <label>Final answer:</label>
-                    <input id="answer-input" type="text" placeholder="Enter your answer..." />
-                    <div id="answer-feedback"></div>
-                </div>
-            </div>
-            <div class="button-container">
-                <button onclick="checkAnswer()">Submit</button>
-            </div>
+  <head>
+    <title>WIT Challenge</title>
+    <link rel="stylesheet" href="challenge.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">Challenge 2: Codeword</div>
+      <div class="instructions">
+        <h2>Instructions</h2>
+        <p>You have been given the code: <b>41267520</b></p>
+        <p>
+          This has been calculated by multiplying the ASCII values of 4 letters,
+          which together make up a word. Reverse engineer the code to find the 4
+          letter answer.
+        </p>
+        <p>HINT: the 4-letter word uses uppercase letters only.</p>
+      </div>
+      <div class="workspace">
+        <p style="margin-bottom: 16px">
+          If you have a preferred code editor, please use it for writing your
+          solution. Otherwise, please use the embedded editor below. Your choice
+          of editor/language will not affect your ability to complete the
+          challenge - only your final answer will be checked.
+        </p>
+        <iframe
+          id="oc-editor"
+          frameborder="0"
+          height="450px"
+          src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideStdin=true"
+          width="100%"
+        ></iframe>
+        <p style="margin-bottom: 16px">
+          <i
+            >This code editor is embedded from
+            <a href="https://onecompiler.com/">OneCompiler</a></i
+          >
+        </p>
+        <div class="final-answer">
+          <label>Final answer:</label>
+          <input
+            id="answer-input"
+            type="text"
+            placeholder="Enter your answer..."
+          />
+          <div id="answer-feedback"></div>
         </div>
-        <footer></footer>
+      </div>
+      <div class="button-container">
+        <button onclick="buttonAction()">Submit</button>
+      </div>
+    </div>
+    <footer></footer>
 
-        <script>
-            var correctHash = "f740d8afd6d1ff48c96afd339b2fe2723e730011046b0b06c623c2a9cd339c42";
-            var salt = atob("V0lUY2hhbGxlbmdlMg==");
+    <script>
+      var correctHash =
+        "f740d8afd6d1ff48c96afd339b2fe2723e730011046b0b06c623c2a9cd339c42";
+      var salt = atob("V0lUY2hhbGxlbmdlMg==");
 
-            async function hashInput(input) {
-                var encoder = new TextEncoder();
-                var data = encoder.encode(salt + input);
-                var hashBuffer = await crypto.subtle.digest("SHA-256", data);
-                var hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray
-                    .map(function (b) {
-                        return b.toString(16).padStart(2, "0");
-                    })
-                    .join("");
-            }
+      async function hashInput(input) {
+        var encoder = new TextEncoder();
+        var data = encoder.encode(salt + input);
+        var hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        var hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray
+          .map(function (b) {
+            return b.toString(16).padStart(2, "0");
+          })
+          .join("");
+      }
 
-            async function buttonAction() {
-                var input = document.getElementById("answer-input").value.trim();
-                var feedback = document.getElementById("answer-feedback");
-                const submitButton = document.getElementById("submitButton");
-                if (submitButton.textContent == "Submit") {
-                    if (input === "") {
-                        feedback.textContent = "⚠️ Please enter an answer.";
-                        feedback.style.color = "orange";
-                        return;
-                    }
+      async function buttonAction() {
+        var input = document.getElementById("answer-input").value.trim();
+        var feedback = document.getElementById("answer-feedback");
+        const submitButton = document.getElementById("submitButton");
+        if (submitButton.textContent == "Submit") {
+          if (input === "") {
+            feedback.textContent = "⚠️ Please enter an answer.";
+            feedback.style.color = "orange";
+            return;
+          }
 
-                    var hash = await hashInput(input);
+          var hash = await hashInput(input);
 
-                    if (hash === correctHash) {
-                        feedback.textContent = "✅ Correct! Well done!";
-                        feedback.style.color = "green";
-                        localStorage.setItem("current_challenge", "2");
-                    } else {
-                        feedback.textContent = "❌ Incorrect, try again.";
-                        feedback.style.color = "red";
-                    }
-                } else {
-                    window.location.href = "../maze/index.html";
-                }
-            }
+          if (hash === correctHash) {
+            feedback.textContent = "✅ Correct! Well done!";
+            feedback.style.color = "green";
+            submitButton.textContent = "Continue";
+            localStorage.setItem("current_challenge", "2");
+          } else {
+            feedback.textContent = "❌ Incorrect, try again.";
+            feedback.style.color = "red";
+          }
+        } else {
+          window.location.href = "../maze/index.html";
+        }
+      }
 
-            document.getElementById("answer-input").addEventListener("keydown", function (e) {
-                if (e.key === "Enter") buttonAction();
-            });
-        </script>
-    </body>
+      document
+        .getElementById("answer-input")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") buttonAction();
+        });
+    </script>
+  </body>
 </html>
