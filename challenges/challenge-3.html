@@ -16,13 +16,13 @@
                     ability to complete the challenge - only your final answer will be checked.
                 </p>
                 <iframe id="oc-editor" frameborder="0" height="450px" src="https://onecompiler.com/embed/python?theme=dark&hideTitle=true&hideStdin=true" width="100%"></iframe>
-                <p>
+                <p style="margin-bottom: 16px;">
                     <i>This code editor is embedded from <a href="https://onecompiler.com/">OneCompiler</a></i>
                 </p>
                 <div class="final-answer">
                     <label>Final answer:</label>
                     <input id="answer-input" type="text" placeholder="Enter your answer..." />
-                    <span id="answer-feedback"></span>
+                    <div id="answer-feedback"></div>
                 </div>
             </div>
             <div class="button-container">
@@ -30,12 +30,45 @@
             </div>
         </div>
         <footer></footer>
+
         <script>
-const _0x4e2a=['a9e822f84a453fee1458f88b2d0cf621e48e9b3615586f9a9fd9444f72c19328','answer-input','answer-feedback','','replace','trim','textContent','\u26a0\ufe0f Please enter an answer.','style','color','orange','SHA-256','map','toString','padStart','join','\u2705 Correct! Well done!','green','\u274c Incorrect, try again.','red','addEventListener','keydown','Enter','WITchallenge3'];
-const _h=_0x4e2a[0];
-const _s=_0x4e2a[23];
-async function checkAnswer(){const _a=document.getElementById(_0x4e2a[1]).value;const _f=document.getElementById(_0x4e2a[2]);const _n=_a[_0x4e2a[4]](/,/g,_0x4e2a[3])[_0x4e2a[5]]();if(_n===_0x4e2a[3]){_f[_0x4e2a[6]]=_0x4e2a[7];_f[_0x4e2a[8]][_0x4e2a[9]]=_0x4e2a[10];return;}const _e=new TextEncoder();const _d=_e.encode(_s+_n);const _b=await crypto.subtle.digest(_0x4e2a[11],_d);const _arr=Array.from(new Uint8Array(_b));const _hx=_arr[_0x4e2a[12]](_v=>_v[_0x4e2a[13]](16)[_0x4e2a[14]](2,'0'))[_0x4e2a[15]]('');if(_hx===_h){_f[_0x4e2a[6]]=_0x4e2a[16];_f[_0x4e2a[8]][_0x4e2a[9]]=_0x4e2a[17];}else{_f[_0x4e2a[6]]=_0x4e2a[18];_f[_0x4e2a[8]][_0x4e2a[9]]=_0x4e2a[19];}}
-document.getElementById(_0x4e2a[1])[_0x4e2a[20]](_0x4e2a[21],function(_ev){if(_ev.key===_0x4e2a[22])checkAnswer();});
+            var correctHash = 'a9e822f84a453fee1458f88b2d0cf621e48e9b3615586f9a9fd9444f72c19328';
+            var salt = atob('V0lUY2hhbGxlbmdlMw==');
+
+            async function hashInput(input) {
+                var encoder = new TextEncoder();
+                var data = encoder.encode(salt + input);
+                var hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                var hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(function(b) {
+                    return b.toString(16).padStart(2, '0');
+                }).join('');
+            }
+
+            async function checkAnswer() {
+                var input = document.getElementById('answer-input').value.replace(/,/g, '').trim();
+                var feedback = document.getElementById('answer-feedback');
+
+                if (input === '') {
+                    feedback.textContent = '⚠️ Please enter an answer.';
+                    feedback.style.color = 'orange';
+                    return;
+                }
+
+                var hash = await hashInput(input);
+
+                if (hash === correctHash) {
+                    feedback.textContent = '✅ Correct! Well done!';
+                    feedback.style.color = 'green';
+                } else {
+                    feedback.textContent = '❌ Incorrect, try again.';
+                    feedback.style.color = 'red';
+                }
+            }
+
+            document.getElementById('answer-input').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') checkAnswer();
+            });
         </script>
     </body>
 </html>
