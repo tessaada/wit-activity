@@ -1,3 +1,13 @@
+const container = document.body;
+const width = container.clientWidth;
+const height = container.clientHeight;
+
+if (width < height) {
+    container.setAttribute("data-direction", "column");
+} else {
+    container.setAttribute("data-direction", "row");
+}
+
 const maze = document.getElementById("maze");
 
 const dims = window.innerWidth > window.innerHeight ? window.innerHeight * 0.9 + "px" : window.innerWidth * 0.9 + "px";
@@ -65,7 +75,6 @@ for (let y = 0; y < 30; y++) {
         cell.style.height = divSize + "px";
         if (y == player.y && x == player.x) {
             cell.classList.add("player");
-            console.log("Found");
         } else if (wallMap[y][x] == "E") {
             cell.classList.add("end");
         } else if (challenges.find((c, i) => c.x == x && c.y == y && i + 1 > parseInt(localStorage.getItem("current_challenge")))) {
@@ -132,6 +141,5 @@ document.body.addEventListener("keydown", (e) => {
                 document.location.href = `../challenges/challenge-${i + 1}.html`;
             }
         });
-        console.log("Challenge reached");
     }
 });
