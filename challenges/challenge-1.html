@@ -1,23 +1,18 @@
 <html>
     <head>
         <title>WIT Challenge</title>
-        <link rel="stylesheet" href="challenge.css" />
+        <link rel="stylesheet" href="challenge-template.css" />
     </head>
     <body>
         <div class="container">
-            <div class="title">Challenge 1: Caesar Cipher</div>
+            <div class="title">Challenge 1: Hidden Palindromes</div>
             <div class="instructions">
                 <h2>Instructions</h2>
+                <p>A palindrome is a word that is the same forwards and backwards. For example, racecar backwards still spells racecar.</p>
                 <p>
-                    You have been given a suspicious code encrypted using Caesar Cipher. Your task is to write a Python program to help you decrypt it. A traditional caesar cipher 'rotates' the
-                    unencrypted letters, replacing each letter with a letter offset by 3. For example, 'CAT' would become 'FDW'.
+                    You have been given a list of 500 words
+                    <a href="./wordlist.txt">here</a>. Copy the list from the link and paste it into your editor. Write a script that calculates how many words are palindromes in the list.
                 </p>
-                <p>
-                    Given this code:<br />
-                    <b>hvs rsqcrsr obgksf wg qcadihsf dfcqsggcf</b><br />
-                    find the unencrypted answer.
-                </p>
-                <p>HINT: the rotation could be something other than 3…</p>
             </div>
             <div class="workspace">
                 <p style="margin-bottom: 16px">
@@ -41,8 +36,8 @@
         <footer></footer>
 
         <script>
-            var correctHash = "e3398f8eddab784f516e554e3e517cf0a4aa2de9c51534960f7106059bc1fa40";
-            var salt = atob("V0lUY2hhbGxlbmdlMQ==");
+            var correctHash = "a0cee08b637e32343d8be5d4a05ada1a4d27daaaa856eac802eea1dc0ac276d9";
+            var salt = atob("V0lUY2hhbGxlbmdlNA==");
 
             async function hashInput(input) {
                 var encoder = new TextEncoder();
